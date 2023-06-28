@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import ts from 'rollup-plugin-typescript2';
 import cjs from '@rollup/plugin-commonjs';
+import replace from '@rollup/plugin-replace';
 
 const pkgPath = path.resolve(__dirname, '../../packages');
 const distPath = path.resolve(__dirname, '../../dist/node_modules');
@@ -21,6 +22,11 @@ export function getPackageJSON(pkgName) {
   return JSON.parse(str);
 }
 //定义插件
-export function getBaseRollupPlugin({ typesrcipt = {} } = {}) {
-  return [cjs(), ts(typesrcipt)];
+export function getBaseRollupPlugin({
+  alias = {
+    __DEV__: true
+  },
+  typesrcipt = {}
+} = {}) {
+  return [replace(alias), cjs(), ts(typesrcipt)];
 }

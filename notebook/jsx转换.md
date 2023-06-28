@@ -23,3 +23,4 @@ React.createElement方法
     React
 
 3、利用pnpm link 进行连接我们生成的react包
+    命令：pnpm link --global就可以将全局的react绑定到我们的react包上面

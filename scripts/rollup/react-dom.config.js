@@ -26,6 +26,7 @@ export default [
         format: 'umd'
       }
     ],
+    external: [...Object.keys(peerDependencies)],
     plugins: [
       ...getBaseRollupPlugin(),
       alias({

@@ -5,7 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "shared": "workspace:*",
-    "react-reconiler": "workspace:*"
+    "react-reconciler": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "workspace:*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -5,7 +5,7 @@ import {
 } from './utils.js';
 import generatePackageJson from 'rollup-plugin-generate-package-json';
 import alias from '@rollup/plugin-alias';
-const { name } = getPackageJSON('react-dom');
+const { name, peerDependencies } = getPackageJSON('react-dom');
 
 const pkgPath = resolvePkgPath(name);
 
@@ -48,5 +48,18 @@ export default [
         })
       })
     ]
+  },
+  //react-test-utils
+  {
+    input: `${pkgPath}/test-utils.ts`,
+    output: [
+      {
+        file: `${pkgDisPath}/test-utils.js`,
+        name: 'testUtils',
+        format: 'umd'
+      }
+    ],
+    external: ['react', 'react-dom'],
+    plugins: [...getBaseRollupPlugin()]
   }
 ];

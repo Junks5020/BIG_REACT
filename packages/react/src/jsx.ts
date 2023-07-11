@@ -29,7 +29,7 @@ export const jsx = (type: ElementType, config: any, ...maybeChildren: any) => {
 	const props: Props = {};
 	let ref: Ref = null;
 	for (const prop in config) {
-		const val = config[props];
+		const val = config[prop];
 		if (prop === 'key') {
 			if (val !== undefined) {
 				key = '' + val;
@@ -51,11 +51,7 @@ export const jsx = (type: ElementType, config: any, ...maybeChildren: any) => {
 		if (maybeChildrenLength === 1) {
 			props.children = maybeChildren[0];
 		} else {
-			const children = Array(maybeChildrenLength);
-			for (let i = 0; i < maybeChildrenLength; i++) {
-				children[i] = maybeChildren[i];
-			}
-			props.children = children;
+			props.children = maybeChildren;
 		}
 	}
 	return ReactElement(type, key, ref, props);
@@ -84,3 +80,10 @@ export const jsxDEV = (type: ElementType, config: any) => {
 	}
 	return ReactElement(type, key, ref, props);
 };
+export function isValidElement(object: any) {
+	return (
+		typeof object === 'object' &&
+		object !== null &&
+		object.$$typeof === REACT_ELEMENT_TYPE
+	);
+}

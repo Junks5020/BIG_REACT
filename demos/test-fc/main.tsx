@@ -5,7 +5,11 @@ function App() {
   const [num, setNum] = useState(100);
   window.setNum = setNum;
   return (
-    <div>
+    <div
+      onClick={() => {
+        setNum(num + 1);
+      }}
+    >
       <span>{num}</span>
     </div>
   );

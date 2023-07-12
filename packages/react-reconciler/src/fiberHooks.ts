@@ -73,9 +73,7 @@ function mountState<State>(
   return [memoizedState, dispatch];
 }
 
-function updateState<State>(
-  initialState: (() => State) | State
-): [State, Dispatch<State>] {
+function updateState<State>(): [State, Dispatch<State>] {
   //找到当前useState对应的hook数据
   const hook = updateWorkInProgresHook();
 

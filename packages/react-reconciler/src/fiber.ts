@@ -79,15 +79,18 @@ export const createWorkInProgress = (
     current.alternate = wip;
   } else {
     //update
-    wip.pendingProps = current.pendingProps;
+    wip.pendingProps = pendingProps;
     wip.flags = NoFlags;
     wip.subtreeFlags = NoFlags;
-    wip.child = current.child;
-    wip.memoizedProps = current.memoizedProps;
-    wip.memoizedState = current.memoizedState;
     wip.deletions = null;
+    wip.type = current.type;
   }
   wip.updateQueue = current.updateQueue;
+  wip.child = current.child;
+  wip.flags = current.flags;
+  wip.memoizedProps = current.memoizedProps;
+  wip.memoizedState = current.memoizedState;
+  wip.ref = current.ref;
   return wip;
 };
 

@@ -12,6 +12,7 @@ import {
   appendInitialChild,
   Container
 } from 'hostConfig';
+import { updateFiberProps } from 'react-dom/src/SyntheticEvent';
 export const completeWork = (wip: FiberNode) => {
   //递归中的归
   const newPorps = wip.pendingProps;
@@ -21,11 +22,13 @@ export const completeWork = (wip: FiberNode) => {
     case HostComponent:
       if (current !== null && wip.stateNode) {
         //update
+        //props 是否变化，
+        //变了，Update flag
+        updateFiberProps(wip.stateNode, newPorps);
       } else {
         //mount
         //1、构建DOM
-        // const instance = createInstance(wip.type, newPorps);
-        const instance = createInstance(wip.type);
+        const instance = createInstance(wip.type, newPorps);
         //2、将DOM插入到DOM树中
         appendAllChildren(instance, wip);
         wip.stateNode = instance;
@@ -35,7 +38,7 @@ export const completeWork = (wip: FiberNode) => {
     case HostText:
       if (current !== null && wip.stateNode) {
         //update
-        const oldText = current.memoizedProps.content;
+        const oldText = current.memoizedProps?.content;
         const newText = newPorps.content;
         if (oldText !== newText) {
           markUpdate(wip);

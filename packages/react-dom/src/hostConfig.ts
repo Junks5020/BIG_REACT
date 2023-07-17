@@ -7,40 +7,40 @@ export type TextInstance = Text;
 
 // export function createInstance(type: string, props: any): Instance {
 export function createInstance(type: string, props: any): Instance {
-  // TODO 处理props
-  const element = document.createElement(type) as unknown;
-  updateFiberProps(element as DOMElement, props);
-  return element as DOMElement;
+	// TODO 处理props
+	const element = document.createElement(type) as unknown;
+	updateFiberProps(element as DOMElement, props);
+	return element as DOMElement;
 }
 export function appendInitialChild(
-  parent: Instance | Container,
-  child: Instance
+	parent: Instance | Container,
+	child: Instance
 ) {
-  parent.appendChild(child);
+	parent.appendChild(child);
 }
 export function createTextInstance(content: string) {
-  return document.createTextNode(content);
+	return document.createTextNode(content);
 }
 export const appendChildToContainer = appendInitialChild;
 
 export function commitUpdate(fiber: FiberNode) {
-  switch (fiber.tag) {
-    case HostText:
-      const text = fiber.memoizedProps.content;
-      return commitTextUpdate(fiber.stateNode as TextInstance, text);
-    default:
-      if (__DEV__) {
-        console.log('未处理的commitUpdate');
-      }
-  }
+	switch (fiber.tag) {
+		case HostText:
+			const text = fiber.memoizedProps.content;
+			return commitTextUpdate(fiber.stateNode as TextInstance, text);
+		default:
+			if (__DEV__) {
+				console.log('未处理的commitUpdate');
+			}
+	}
 }
 
 export function commitTextUpdate(textInstance: TextInstance, content: string) {
-  textInstance.textContent = content;
+	textInstance.textContent = content;
 }
 export function removeChild(
-  child: Instance | TextInstance,
-  container: Container
+	child: Instance | TextInstance,
+	container: Container
 ) {
-  container.removeChild(child);
+	container.removeChild(child);
 }

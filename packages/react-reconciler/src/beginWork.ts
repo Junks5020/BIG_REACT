@@ -28,6 +28,7 @@ export const beginWork = (wip: FiberNode) => {
 	}
 	return null;
 };
+
 function updateFunctionComponent(wip: FiberNode) {
 	const nextChildren = renderWithHooks(wip);
 	reconcileChildren(wip, nextChildren);

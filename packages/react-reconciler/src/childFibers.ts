@@ -6,7 +6,7 @@ import {
 	createWorkInProgress
 } from './fiber';
 import { HostText } from './workTags';
-import { REACT_ELEMENT_TYPE } from 'shared/ReactSymbols';
+import { REACT_ELEMENT_TYPE, REACT_FRAGMENT_TYPE } from 'shared/ReactSymbols';
 import { ChildDeletion, Placement } from './fiberFlags';
 
 type ExistingChildren = Map<string | number, FiberNode>;
@@ -45,7 +45,7 @@ function childReconciler(shouldTrackEffect: boolean) {
 		element: ReactElementType
 	) {
 		const key = element.key;
-		work: while (currentFiber !== null) {
+		while (currentFiber !== null) {
 			//key相同
 			if (currentFiber.key === key) {
 				if (element.$$typeof === REACT_ELEMENT_TYPE) {
@@ -115,7 +115,7 @@ function childReconciler(shouldTrackEffect: boolean) {
 		newChild: any[]
 	) {
 		//最后一个可复用fiber在current中的index
-		let lastPlacedIndex: number = 0;
+		let lastPlacedIndex = 0;
 		//创建的最后一个fiber
 		let lastNewFiber: FiberNode | null = null;
 		//创建的第一个fiber
@@ -170,7 +170,7 @@ function childReconciler(shouldTrackEffect: boolean) {
 
 		//将Map中剩余的节点删除
 		existingChildren.forEach((child) => deleteChild(returnFiber, child));
-		return firstNewFiber; 
+		return firstNewFiber;
 	}
 	function updateFromMap(
 		returnFiber: FiberNode,
@@ -213,8 +213,17 @@ function childReconciler(shouldTrackEffect: boolean) {
 	return function reconcileChildFibers(
 		returnFiber: FiberNode,
 		currentFiber: FiberNode | null,
-		newChild?: ReactElementType
+		newChild: ReactElementType
 	) {
+		//是否是fragment类型
+		const isUnKeyedTopLevelFragment =
+			typeof newChild === 'object' &&
+			newChild !== null &&
+			newChild.type === REACT_FRAGMENT_TYPE &&
+			newChild.key === null;
+		if (isUnKeyedTopLevelFragment) {
+			newChild = newChild.props.children;
+		}
 		//判断当前fiber的类型
 		if (typeof newChild === 'object' && newChild !== null) {
 			switch (newChild.$$typeof) {
@@ -241,7 +250,7 @@ function childReconciler(shouldTrackEffect: boolean) {
 			);
 		}
 		if (currentFiber !== null) {
-			deleteChild(returnFiber, currentFiber);
+			deleteRemainingChildren(returnFiber, currentFiber);
 		}
 
 		if (__DEV__) {

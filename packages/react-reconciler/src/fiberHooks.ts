@@ -10,6 +10,7 @@ import {
 import { Dispatch } from 'react/src/currentDispatcher';
 import { createUpdate } from './updateQueue';
 import { scheduleUpdateOnFiber } from './workLoop';
+import { requestUpdateLanes } from './fiberLanes';
 const { currentDispatcher } = internals;
 
 let currentlyRenderingFiber: FiberNode | null = null;
@@ -91,9 +92,10 @@ function dispatchSetState<State>(
 	updateQueue: UpdateQueue<State>,
 	action: Action<State>
 ) {
-	const update = createUpdate(action);
+	const lane = requestUpdateLanes();
+	const update = createUpdate(action,lane);
 	enqueueUpdate(updateQueue, update);
-	scheduleUpdateOnFiber(fiber);
+	scheduleUpdateOnFiber(fiber,lane);
 }
 
 function mountWorkInProgresHook(): Hook {

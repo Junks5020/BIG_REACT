@@ -15,7 +15,10 @@ function App() {
 				setNum(num + 1);
 			}}
 		>
-			{arr}
+			<li>
+				44
+				{arr}
+			</li>
 		</ul>
 	);
 }

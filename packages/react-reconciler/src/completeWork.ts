@@ -3,7 +3,8 @@ import {
 	HostComponent,
 	HostRoot,
 	HostText,
-	FunctionComponent
+	FunctionComponent,
+	Fragment
 } from './workTags';
 import { NoFlags, Update } from './fiberFlags';
 import {
@@ -43,7 +44,7 @@ export const completeWork = (wip: FiberNode) => {
 				if (oldText !== newText) {
 					markUpdate(wip);
 				}
-			} else {
+				} else {
 				//mount
 				//1、构建DOM
 				const instance = createTextInstance(newPorps.content);
@@ -53,8 +54,7 @@ export const completeWork = (wip: FiberNode) => {
 			bubbleProperties(wip);
 			return null;
 		case HostRoot:
-			bubbleProperties(wip);
-			return null;
+		case Fragment:
 		case FunctionComponent:
 			bubbleProperties(wip);
 			return null;

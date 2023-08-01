@@ -7,9 +7,9 @@ function App() {
 	return (
 		<ul
 			onClickCapture={() => {
-				setNum(() => num + 1);
-				setNum(() => num + 1);
-				setNum(() => num + 1);
+				setNum((num) => num + 1);
+				setNum((num) => num + 1);
+				setNum((num) => num + 1);
 			}}
 		>
 			<li>{num}</li>

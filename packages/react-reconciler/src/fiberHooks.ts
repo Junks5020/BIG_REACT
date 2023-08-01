@@ -65,6 +65,7 @@ function mountState<State>(
 	} else {
 		memoizedState = initialState;
 	}
+	hook.memoizedState = memoizedState;
 	const queue = createUpdateQueue<State>();
 	hook.updateQueue = queue;
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -89,6 +90,7 @@ function updateState<State>(): [State, Dispatch<State>] {
 			renderLane
 		);
 		hook.memoizedState = memoizedState;
+		queue.shared.pending = null;
 	}
 	return [hook.memoizedState, queue.dispatch as Dispatch<State>];
 }

@@ -44,7 +44,7 @@ export const completeWork = (wip: FiberNode) => {
 				if (oldText !== newText) {
 					markUpdate(wip);
 				}
-				} else {
+			} else {
 				//mount
 				//1、构建DOM
 				const instance = createTextInstance(newPorps.content);

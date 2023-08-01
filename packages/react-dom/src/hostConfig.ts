@@ -52,3 +52,9 @@ export function insertChildToCantainer(
 ) {
 	container.insertBefore(child, before);
 }
+export const scheduleMicrotask =
+	typeof queueMicrotask === 'function'
+		? queueMicrotask
+		: typeof Promise === 'function'
+		? (callback: () => void) => Promise.resolve().then(callback)
+		: setTimeout;

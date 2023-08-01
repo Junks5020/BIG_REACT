@@ -163,7 +163,7 @@ function recordHostChildrenToDelete(
 	unmountFiber: FiberNode
 ) {
 	//找到第一个root节点
-	let lastOne = childrenToDelete[childrenToDelete.length - 1];
+	const lastOne = childrenToDelete[childrenToDelete.length - 1];
 	if (!lastOne) {
 		childrenToDelete.push(unmountFiber);
 	} else {
